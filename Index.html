@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will King — Cybersecurity Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+:root {
+  --navy: #0F1923;
+  --navy-mid: #162230;
+  --navy-card: #1C2B38;
+  --navy-border: #243545;
+  --teal: #1D9E75;
+  --teal-light: #23C48E;
+  --teal-dim: rgba(29,158,117,0.12);
+  --off-white: #E8EDF2;
+  --muted: #7A8FA0;
+  --muted-mid: #96AABB;
+  --danger: #E05C5C;
+  --warn: #D4913A;
+  --text: #D6E4EE;
+  --mono: 'JetBrains Mono', monospace;
+  --sans: 'Inter', system-ui, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--navy);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--teal-light); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+nav {
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  background: rgba(15,25,35,0.92);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--navy-border);
+  padding: 0 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: 56px;
+}
+
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--teal-light);
+  letter-spacing: 0.03em;
+}
+
+.nav-links {
+  display: flex;
+  gap: 2rem;
+  list-style: none;
+}
+
+.nav-links a {
+  font-size: 13px;
+  color: var(--muted-mid);
+  text-decoration: none;
+  letter-spacing: 0.02em;
+  transition: color 0.15s;
+}
+
+.nav-links a:hover { color: var(--off-white); }
+
+hero {
+  display: block;
+  min-height: 88vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 5rem 2rem 4rem;
+  max-width: 860px;
+  margin: 0 auto;
+}
+
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--teal);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin-bottom: 1.5rem;
+}
+
+.hero-name {
+  font-size: clamp(2.4rem, 5vw, 3.8rem);
+  font-weight: 500;
+  color: var(--off-white);
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+  margin-bottom: 0.5rem;
+}
+
+.hero-role {
+  font-size: clamp(1.1rem, 2.5vw, 1.5rem);
+  color: var(--muted-mid);
+  font-weight: 400;
+  margin-bottom: 2rem;
+  line-height: 1.4;
+}
+
+.hero-role span {
+  color: var(--teal-light);
+  font-weight: 500;
+}
+
+.hero-bio {
+  font-size: 15px;
+  color: var(--muted-mid);
+  max-width: 600px;
+  margin-bottom: 2.5rem;
+  line-height: 1.8;
+}
+
+.terminal-block {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 10px;
+  padding: 1.25rem 1.5rem;
+  font-family: var(--mono);
+  font-size: 13px;
+  max-width: 620px;
+  margin-bottom: 2.5rem;
+}
+
+.terminal-bar {
+  display: flex;
+  gap: 6px;
+  margin-bottom: 1rem;
+  align-items: center;
+}
+
+.dot { width: 10px; height: 10px; border-radius: 50%; }
+.dot-r { background: #E05C5C; }
+.dot-y { background: #D4913A; }
+.dot-g { background: var(--teal); }
+
+.terminal-bar span {
+  font-size: 11px;
+  color: var(--muted);
+  margin-left: 8px;
+}
+
+.t-line { margin-bottom: 4px; line-height: 1.6; }
+.t-prompt { color: var(--teal); }
+.t-cmd { color: var(--off-white); }
+.t-out { color: var(--muted-mid); padding-left: 0; }
+.t-out.green { color: var(--teal-light); }
+.t-out.red { color: var(--danger); }
+.t-out.yellow { color: var(--warn); }
+.t-cursor { display: inline-block; width: 8px; height: 14px; background: var(--teal); vertical-align: middle; animation: blink 1s step-end infinite; margin-left: 2px; }
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:0} }
+
+.hero-cta {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 10px 20px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  text-decoration: none;
+  transition: all 0.15s;
+  cursor: pointer;
+  border: none;
+}
+
+.btn-primary {
+  background: var(--teal);
+  color: #fff;
+}
+.btn-primary:hover { background: var(--teal-light); text-decoration: none; }
+
+.btn-secondary {
+  background: transparent;
+  color: var(--muted-mid);
+  border: 1px solid var(--navy-border);
+}
+.btn-secondary:hover { border-color: var(--muted); color: var(--off-white); text-decoration: none; }
+
+section {
+  max-width: 860px;
+  margin: 0 auto;
+  padding: 4rem 2rem;
+  border-top: 1px solid var(--navy-border);
+}
+
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--teal);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-bottom: 0.5rem;
+}
+
+.section-title {
+  font-size: 1.6rem;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 2.5rem;
+  letter-spacing: -0.01em;
+}
+
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) {
+  .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+  .nav-links { gap: 1.2rem; }
+}
+
+.about-text p { color: var(--muted-mid); margin-bottom: 1rem; line-height: 1.8; }
+.about-text p:last-child { margin-bottom: 0; }
+
+.skills-group { margin-bottom: 1.5rem; }
+.skills-group-label { font-size: 11px; font-family: var(--mono); color: var(--muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; }
+.skill-tags { display: flex; flex-wrap: wrap; gap: 6px; }
+.tag {
+  font-size: 12px;
+  font-family: var(--mono);
+  padding: 3px 10px;
+  border-radius: 4px;
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  color: var(--muted-mid);
+}
+.tag.active { border-color: rgba(29,158,117,0.4); color: var(--teal-light); background: var(--teal-dim); }
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+@media (max-width: 640px) { .projects-grid { grid-template-columns: 1fr; } }
+
+.project-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 10px;
+  padding: 1.5rem;
+  transition: border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.project-card:hover { border-color: rgba(29,158,117,0.35); }
+.project-card.featured { grid-column: 1 / -1; }
+
+.project-icon {
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  background: var(--teal-dim);
+  border: 1px solid rgba(29,158,117,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 1rem;
+  font-size: 16px;
+}
+
+.project-title {
+  font-size: 15px;
+  font-weight: 500;
+  color: var(--off-white);
+  margin-bottom: 6px;
+}
+
+.project-desc {
+  font-size: 13px;
+  color: var(--muted-mid);
+  line-height: 1.7;
+  margin-bottom: 1rem;
+  flex: 1;
+}
+
+.project-findings {
+  margin-bottom: 1rem;
+}
+
+.finding {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  font-size: 12px;
+  font-family: var(--mono);
+  color: var(--muted-mid);
+  margin-bottom: 4px;
+  line-height: 1.5;
+}
+
+.finding-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  margin-top: 5px;
+  flex-shrink: 0;
+}
+
+.finding-dot.critical { background: var(--danger); }
+.finding-dot.high { background: var(--warn); }
+.finding-dot.ok { background: var(--teal); }
+
+.project-tags { display: flex; flex-wrap: wrap; gap: 5px; }
+.project-tag {
+  font-size: 11px;
+  font-family: var(--mono);
+  padding: 2px 8px;
+  border-radius: 3px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--navy-border);
+  color: var(--muted);
+}
+
+.certs-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 12px;
+}
+
+.cert-card {
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 8px;
+  padding: 1rem 1.25rem;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.cert-status {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  margin-top: 6px;
+  flex-shrink: 0;
+}
+.cert-status.earned { background: var(--teal); }
+.cert-status.progress { background: var(--warn); }
+.cert-status.planned { background: var(--navy-border); }
+
+.cert-name { font-size: 13px; font-weight: 500; color: var(--off-white); margin-bottom: 2px; }
+.cert-meta { font-size: 12px; color: var(--muted); }
+
+.timeline-section { }
+
+.tl-item {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 1.5rem;
+  padding-bottom: 2rem;
+  position: relative;
+}
+
+.tl-item::before {
+  content: '';
+  position: absolute;
+  left: 139px;
+  top: 8px;
+  bottom: 0;
+  width: 1px;
+  background: var(--navy-border);
+}
+
+.tl-item:last-child::before { display: none; }
+
+.tl-date {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  padding-top: 4px;
+  text-align: right;
+}
+
+.tl-dot-wrap {
+  position: absolute;
+  left: 132px;
+  top: 4px;
+  width: 16px;
+  height: 16px;
+  background: var(--navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tl-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--teal);
+  flex-shrink: 0;
+}
+
+.tl-content { padding-left: 1rem; }
+.tl-role { font-size: 14px; font-weight: 500; color: var(--off-white); margin-bottom: 2px; }
+.tl-org { font-size: 13px; color: var(--teal-light); margin-bottom: 6px; }
+.tl-desc { font-size: 13px; color: var(--muted-mid); line-height: 1.7; }
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 640px) { .contact-grid { grid-template-columns: 1fr; } }
+
+.contact-text { color: var(--muted-mid); font-size: 14px; line-height: 1.8; }
+.contact-links { display: flex; flex-direction: column; gap: 10px; }
+
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 16px;
+  background: var(--navy-card);
+  border: 1px solid var(--navy-border);
+  border-radius: 8px;
+  color: var(--muted-mid);
+  text-decoration: none;
+  font-size: 13px;
+  transition: border-color 0.15s, color 0.15s;
+}
+
+.contact-link:hover { border-color: var(--teal); color: var(--teal-light); text-decoration: none; }
+.contact-link-icon { font-size: 16px; }
+
+footer {
+  border-top: 1px solid var(--navy-border);
+  padding: 2rem;
+  text-align: center;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<nav>
+  <span class="nav-logo">wking@portfolio:~$</span>
+  <ul class="nav-links">
+    <li><a href="#about">about</a></li>
+    <li><a href="#projects">projects</a></li>
+    <li><a href="#certs">certs</a></li>
+    <li><a href="#experience">experience</a></li>
+    <li><a href="#contact">contact</a></li>
+  </ul>
+</nav>
+
+<hero>
+  <div class="hero-eyebrow">// cybersecurity portfolio</div>
+  <h1 class="hero-name">Will King</h1>
+  <p class="hero-role">Blue team analyst in transition — <span>building from the ground up.</span></p>
+  <p class="hero-bio">Education leader turned cybersecurity professional. Over the last few years I've managed school operations, overseen 3,200+ device users, and built security awareness training at a large public school in Central Florida. Now I'm translating that operational instinct into hands-on SOC analyst work — home lab first, enterprise next.</p>
+
+  <div class="terminal-block">
+    <div class="terminal-bar">
+      <div class="dot dot-r"></div>
+      <div class="dot dot-y"></div>
+      <div class="dot dot-g"></div>
+      <span>kali@homelab — nmap scan results</span>
+    </div>
+    <div class="t-line"><span class="t-prompt">$ </span><span class="t-cmd">nmap -sV 192.168.56.103</span></div>
+    <div class="t-line"><span class="t-out">Starting Nmap 7.99 — host is up (0.026s latency)</span></div>
+    <div class="t-line"><span class="t-out">PORT&nbsp;&nbsp;&nbsp;&nbsp; STATE SERVICE&nbsp;&nbsp; VERSION</span></div>
+    <div class="t-line"><span class="t-out red">21/tcp&nbsp;&nbsp; open&nbsp; ftp&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; vsftpd 2.3.4 ← CVE-2011-2523</span></div>
+    <div class="t-line"><span class="t-out">22/tcp&nbsp;&nbsp; open&nbsp; ssh&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; OpenSSH 4.7p1</span></div>
+    <div class="t-line"><span class="t-out red">1524/tcp open&nbsp; shell&nbsp;&nbsp;&nbsp;&nbsp; Metasploitable root shell</span></div>
+    <div class="t-line"><span class="t-out green">// 22 open ports discovered — ingested into Splunk ✓</span></div>
+    <div class="t-line"><span class="t-prompt">$ </span><span class="t-cursor"></span></div>
+  </div>
+
+  <div class="hero-cta">
+    <a href="#projects" class="btn btn-primary">View projects</a>
+    <a href="#contact" class="btn btn-secondary">Get in touch</a>
+  </div>
+</hero>
+
+<section id="about">
+  <div class="section-label">// about</div>
+  <h2 class="section-title">The background behind the transition</h2>
+  <div class="about-grid">
+    <div class="about-text">
+      <p>I'm a first-generation college graduate with a M.Ed. in Educational Leadership and nearly a decade of experience in school administration in Central Florida. As Assistant Principal at a large public school, I oversee a campus of 3,200+ device users — coordinating with district IT on access management and policy enforcement, and creating security awareness training for staff focused on physical security and device accountability.</p>
+      <p>What I discovered doing that work is that I already think like a security analyst: I look for patterns, document chains of custody, and ask "how did this happen and how do we prevent it." I'm now building the technical layer to match — through a home lab, hands-on tools, and a deliberate certification path toward SOC analyst work.</p>
+      <p>I'm targeting blue team roles where operational judgment matters as much as technical depth — and where the ability to communicate findings clearly is an asset, not an afterthought.</p>
+    </div>
+    <div>
+      <div class="skills-group">
+        <div class="skills-group-label">Active in lab</div>
+        <div class="skill-tags">
+          <span class="tag active">Kali Linux</span>
+          <span class="tag active">Splunk</span>
+          <span class="tag active">Nmap</span>
+          <span class="tag active">Metasploit</span>
+          <span class="tag active">tcpdump</span>
+          <span class="tag active">Python</span>
+          <span class="tag active">VirtualBox</span>
+          <span class="tag active">systemd</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <div class="skills-group-label">Security concepts</div>
+        <div class="skill-tags">
+          <span class="tag active">Threat detection</span>
+          <span class="tag active">Log analysis</span>
+          <span class="tag active">Incident response</span>
+          <span class="tag active">Vulnerability scanning</span>
+          <span class="tag active">SIEM</span>
+          <span class="tag active">Chain of custody</span>
+        </div>
+      </div>
+      <div class="skills-group">
+        <div class="skills-group-label">Work context</div>
+        <div class="skill-tags">
+          <span class="tag">Azure / Entra ID</span>
+          <span class="tag">Security awareness training</span>
+          <span class="tag">Access management</span>
+          <span class="tag">Incident escalation</span>
+          <span class="tag">Root cause analysis</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="projects">
+  <div class="section-label">// projects</div>
+  <h2 class="section-title">Hands-on work</h2>
+  <div class="projects-grid">
+
+    <div class="project-card featured">
+      <div class="project-icon">🔬</div>
+      <div class="project-title">Penetration testing home lab — Kali + Metasploitable + Splunk</div>
+      <div class="project-desc">Built a fully isolated two-VM penetration testing environment on VirtualBox using Kali Linux 2026.1 as the attacker machine and Metasploitable2 as the intentionally vulnerable target. Configured a host-only network (192.168.56.x) to isolate the lab from the home network, added a NAT adapter for Kali internet access, and resolved a persistent NetworkManager/dhcpcd boot-time conflict by writing a custom systemd service. Installed and configured Splunk Enterprise 10.4, exported systemd journal logs to a flat file, and configured Splunk file monitoring to ingest real-time authentication and sudo activity. Completed the first full Nmap service version scan against Metasploitable.</div>
+      <div class="project-findings">
+        <div class="finding"><div class="finding-dot critical"></div><span>vsftpd 2.3.4 — CVE-2011-2523 backdoor (port 6200)</span></div>
+        <div class="finding"><div class="finding-dot critical"></div><span>Unauthenticated root shell exposed on port 1524</span></div>
+        <div class="finding"><div class="finding-dot high"></div><span>Telnet active — plaintext credential transmission</span></div>
+        <div class="finding"><div class="finding-dot high"></div><span>MySQL 5.0.51a — root login with blank password</span></div>
+        <div class="finding"><div class="finding-dot high"></div><span>Samba smbd 3.x — known RCE exposure on 139/445</span></div>
+        <div class="finding"><div class="finding-dot ok"></div><span>22 open ports total — all findings ingested into Splunk</span></div>
+      </div>
+      <div class="project-tags">
+        <span class="project-tag">Kali Linux</span>
+        <span class="project-tag">Metasploitable2</span>
+        <span class="project-tag">Splunk 10.4</span>
+        <span class="project-tag">Nmap</span>
+        <span class="project-tag">VirtualBox</span>
+        <span class="project-tag">systemd</span>
+        <span class="project-tag">journalctl</span>
+        <span class="project-tag">network forensics</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🐍</div>
+      <div class="project-title">Python SOC triage pipeline</div>
+      <div class="project-desc">Built a suite of Python security automation scripts during the Google Cybersecurity Certificate, culminating in a unified SOC triage pipeline. Scripts include a brute force log parser, IP reputation checker, and file integrity monitor — each built from scratch and combined into a single triage workflow.</div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">log parsing</span>
+        <span class="project-tag">file integrity</span>
+        <span class="project-tag">IP reputation</span>
+        <span class="project-tag">automation</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">🗄️</div>
+      <div class="project-title">SQL for security — applied queries</div>
+      <div class="project-desc">Developed and documented SQL queries for real security scenarios: failed login detection, missing patch identification, privilege audit, impossible travel detection, lateral movement analysis, and CVE exposure cross-referencing. Applied to both structured security databases and the Chinook sample database.</div>
+      <div class="project-tags">
+        <span class="project-tag">SQL</span>
+        <span class="project-tag">threat detection</span>
+        <span class="project-tag">vulnerability management</span>
+        <span class="project-tag">compliance</span>
+      </div>
+    </div>
+
+    <div class="project-card">
+      <div class="project-icon">📋</div>
+      <div class="project-title">IP allow list automation — Python file handling</div>
+      <div class="project-desc">Built a Python algorithm to automate IP address allow list management: reads a text file of approved IPs, cross-references against a remove list, strips unauthorized addresses, and rewrites the file — fully documented with inline comments and a professional algorithm write-up for the Google Cybersecurity Certificate.</div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">file I/O</span>
+        <span class="project-tag">access control</span>
+        <span class="project-tag">automation</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="certs">
+  <div class="section-label">// certifications</div>
+  <h2 class="section-title">Credentials and training</h2>
+  <div class="certs-grid">
+    <div class="cert-card">
+      <div class="cert-status earned"></div>
+      <div>
+        <div class="cert-name">Google Cybersecurity Professional Certificate</div>
+        <div class="cert-meta">Coursera — earned June 2026</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-status progress"></div>
+      <div>
+        <div class="cert-name">CompTIA CySA+ (CS0-003)</div>
+        <div class="cert-meta">In progress — active exam prep</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-status progress"></div>
+      <div>
+        <div class="cert-name">SANS Cyber Academy</div>
+        <div class="cert-meta">Candidate — anticipated late July 2026</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-status progress"></div>
+      <div>
+        <div class="cert-name">CompTIA CCNA</div>
+        <div class="cert-meta">In progress — paused pending CySA+</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-status planned"></div>
+      <div>
+        <div class="cert-name">Microsoft SC-200</div>
+        <div class="cert-meta">Planned — post-SANS</div>
+      </div>
+    </div>
+    <div class="cert-card">
+      <div class="cert-status earned"></div>
+      <div>
+        <div class="cert-name">M.Ed. Educational Leadership</div>
+        <div class="cert-meta">University of West Florida — 2022</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="experience">
+  <div class="section-label">// experience</div>
+  <h2 class="section-title">Where the instincts come from</h2>
+  <div class="timeline-section">
+
+    <div class="tl-item">
+      <div class="tl-date">2022 – present</div>
+      <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-role">Assistant Principal</div>
+        <div class="tl-org">Large public school, Central Florida</div>
+        <div class="tl-desc">Oversee daily operations for a campus serving 3,200+ device users — coordinating with district IT on access management and policy enforcement. Created and delivered original security awareness training content to staff focused on physical security, device accountability, and acceptable use policy. Conducted formal investigations requiring evidence gathering, chain-of-custody documentation, and defensible root cause analysis. Oversight-level exposure to Azure and Entra ID environments supporting district-wide identity management.</div>
+      </div>
+    </div>
+
+    <div class="tl-item">
+      <div class="tl-date">prior role</div>
+      <div class="tl-dot-wrap"><div class="tl-dot"></div></div>
+      <div class="tl-content">
+        <div class="tl-role">Discipline Dean</div>
+        <div class="tl-org">Large public school, Central Florida</div>
+        <div class="tl-desc">Conducted chain-of-custody investigations requiring evidence gathering, root cause analysis, and defensible documentation — a process directly analogous to security incident investigation. Built habits of precision, documentation, and neutrality under pressure that transfer directly to SOC analyst work.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<section id="contact">
+  <div class="section-label">// contact</div>
+  <h2 class="section-title">Let's connect</h2>
+  <div class="contact-grid">
+    <div class="contact-text">
+      <p>I'm actively pursuing SOC analyst and blue team roles. If you're hiring, recruiting, or just want to talk cybersecurity — I'd genuinely love to hear from you.</p>
+      <br>
+      <p style="font-family: var(--mono); font-size: 12px; color: var(--muted);">Based in Apopka, FL — open to remote and Central Florida opportunities.</p>
+    </div>
+    <div class="contact-links">
+      <a href="mailto:wking2121@yahoo.com" class="contact-link">
+        <span class="contact-link-icon">✉</span>
+        <span>wking2121@yahoo.com</span>
+      </a>
+      <a href="https://www.linkedin.com/in/william-king-m-ed-7a3649110/" class="contact-link" target="_blank">
+        <span class="contact-link-icon">in</span>
+        <span>linkedin.com/in/william-king-m-ed</span>
+      </a>
+      <a href="https://github.com/wking21" class="contact-link" target="_blank">
+        <span class="contact-link-icon">⌥</span>
+        <span>github.com/wking21</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  built by will king · apopka, fl · 2026 · <span style="color: var(--teal);">wking@portfolio:~$ █</span>
+</footer>
+
+</body>
+</html>
